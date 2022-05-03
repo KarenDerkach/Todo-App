@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { connect, connection } from 'mongoose';
+const mongoose = require('mongoose')
 // const {
     
 //     URL_MONGODB
@@ -7,10 +7,12 @@ import { connect, connection } from 'mongoose';
 //   } = process.env;
 const uri = "mongodb+srv://todo_app:AA3E6JcQIpn6CFg0@cluster0.hc8pi.mongodb.net/task?retryWrites=true&w=majority";
 
+const conn ={
+  isConnected: false,
+}
 
-
-export async function  dbConnect(){
-    const db = await connect (uri)
+const  dbConnect= async()=>{
+    const db = await mongoose.connect (uri, {useNewUrlParser: true, useUnifiedTopology: true})
    // console.log(db.connection[0].readyState)
 }
 
@@ -40,10 +42,12 @@ export async function  dbConnect(){
    
 
 
-connection.on('open', _=>{
+mongoose.connection.on('open', _=>{
 console.log("MongoDB is Connected")
 })
 
-connection.on('error', error =>{
+mongoose.connection.on('error', error =>{
   console.log(error)
 })
+
+module.exports = dbConnect
