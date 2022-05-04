@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose, { models, model } from 'mongoose'
 
 const {Schema} = mongoose
 
@@ -25,7 +25,7 @@ const entrieTaskSchema = new Schema({
     versionKey: false
 })
 
-const TaskModel =  mongoose.models.tasks || mongoose.model('tasks', entrieTaskSchema)
+const TaskModel =  models.tasks || model('tasks', entrieTaskSchema)
 
-module.exports = TaskModel
+export default TaskModel
 

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-const dbConnect = require("../../../config/dbconnection");
-const TasksModel = require("../../../config/TasksModel");
+import dbConnect  from '../../../config/dbconnection'
+import TasksModel from '../../../config/TasksModel'
 
 dbConnect();
 

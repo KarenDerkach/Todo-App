@@ -1,18 +1,9 @@
-require('dotenv').config();
-const mongoose = require('mongoose')
-// const {
-    
-//     URL_MONGODB
+import mongoose from "mongoose";
 
-//   } = process.env;
-const uri = "mongodb+srv://todo_app:AA3E6JcQIpn6CFg0@cluster0.hc8pi.mongodb.net/task?retryWrites=true&w=majority";
 
-const conn ={
-  isConnected: false,
-}
 
 const  dbConnect= async()=>{
-    const db = await mongoose.connect (uri, {useNewUrlParser: true, useUnifiedTopology: true})
+    mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
    // console.log(db.connection[0].readyState)
 }
 
@@ -50,4 +41,4 @@ mongoose.connection.on('error', error =>{
   console.log(error)
 })
 
-module.exports = dbConnect
+export default dbConnect
