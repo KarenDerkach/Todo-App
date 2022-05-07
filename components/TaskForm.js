@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import {useRouter} from 'next/router'
+import FormControl from '@mui/material/FormControl';
+import { InputLabel, Input } from "@mui/material";
+
 
 export default function TaskForm({task}) {
 
@@ -18,7 +21,7 @@ export default function TaskForm({task}) {
     description: "",
   });
 
-  const colors = ["🔴", "🟡", "🟢", "🔵"];
+  const colors = ["red🔴", "yellow🟡", "green🟢", "blue🔵"];
 
   const handleChangeInput = (e) => {
     setInput({
@@ -121,28 +124,29 @@ export default function TaskForm({task}) {
 
   return (
     <div>
+ 
       <h1>{query.id ? "Edit Task" : "Create Task"}</h1>
 
-      <form onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input
+      <FormControl onSubmit={handleSubmit}>
+        <InputLabel  htmlFor="my-input">Title</InputLabel>
+        <Input
           type="text"
           name="title"
           value={input.title}
           placeholder="Title"
           onChange={handleChangeInput}
-          error={errors.title ?   errors.title : null}
         />
-        <label>Description</label>
+        {errors.title && <p>{errors.title}</p>}
+        <InputLabel>Description</InputLabel>
         <textarea
           name="description"
           value={input.description}
           placeholder="Description"
           rows="2"
           onChange={handleChangeInput}
-          error={errors.description ?   errors.description : null}
         />
-        <label>Color</label>
+        {errors.description && <p>{errors.description}</p>}
+        <InputLabel>Color</InputLabel>
         <select
           type="text"
           name="color"
@@ -155,7 +159,7 @@ export default function TaskForm({task}) {
             </option>
           ))}
         </select>
-        <label>Status</label>
+        <InputLabel>Status</InputLabel>
         <select
           type="text"
           name="status"
@@ -167,7 +171,8 @@ export default function TaskForm({task}) {
           <option value="Done">Done</option>
         </select>
         <button type="submit">{query.id ? "Update":"Add"}</button>
-      </form>
+      </FormControl>
+   
     </div>
   );
 }

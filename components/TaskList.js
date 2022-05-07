@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 import ButtonDelete from './ButtonDelete';
-import TablePaginationAction from './tools/TablePaginationAction';
-import PropTypes from 'prop-types';
+import { makeStyles } from '@mui/styles'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,28 +12,31 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+
 //icons
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 //import search from '../components/tools/Img/notcontent.jpg'
 //grid
 import Grid from '@mui/material/Grid';
+import TaskForm from './TaskForm';
 
-
+const useStyles = makeStyles((theme) => ({
+  tableCell : {
+    background: null,
+    color: 'black',
+    fontSize: '1.5rem',
+  }
+})
+)
 
 export default function TaskList ({data}){
     //console.log("props de taskList",data)
 
+    const classes = useStyles();
     const {push} = useRouter()
 
     const [open, setOpen] = useState(false);
-
-    TablePaginationAction.propTypes = {
-        count: PropTypes.number.isRequired,
-        onPageChange: PropTypes.func.isRequired,
-        page: PropTypes.number.isRequired,
-        rowsPerPage: PropTypes.number.isRequired,
-      };
 
       const [page, setPage] = useState(0);
       const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -61,7 +64,13 @@ const handleClose = () => {
   setOpen(false);
 };
 
-      
+//CONFIG MODAL
+
+// const [openModal, setOpenModal] = useState(false);
+//   const handleOpenModal = () => setOpenModal(true);
+//   const handleCloseModal = () => setOpenModal(false);
+
+
 
       //if not exits tasks
       if(data.length === 0){
@@ -81,6 +90,7 @@ const handleClose = () => {
       //if exits tasks
 
 return(
+  <>
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
       <TableBody>
@@ -88,8 +98,9 @@ return(
           ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           : data
         ).map((task) => (
-          <TableRow key={task._id}>
-            <TableCell component="th" scope="row">
+          <TableRow key={task._id} >
+            
+            <TableCell component="th" scope="row" className={classes.tableCell}>
               {task.title}
             </TableCell>
             <TableCell style={{ width: 80 }} align="right">
@@ -97,7 +108,7 @@ return(
             </TableCell>
             <TableCell style={{ width: 80 }} align="right">
              <Button 
-            //  onClick={()=>handleDelete(task._id)}
+            
             onClick={handleClickOpen}
              > 
              <ClearIcon/> 
@@ -129,12 +140,16 @@ return(
             }}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            ActionsComponent={TablePaginationAction}
           />
         </TableRow>
       </TableFooter>
     </Table>
   </TableContainer>
+  <section>
+   <Link href='/task/create'><a><Button >New Task</Button></a></Link>
+    {/* {openModal ? <TaskForm modalOpen={openModal} handleCloseModal={handleCloseModal}/>: null} */}
+  </section>
+  </>
 )
     
 }

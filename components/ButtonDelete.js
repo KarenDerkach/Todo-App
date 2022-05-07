@@ -35,7 +35,7 @@ export default function ButtonDelete({open, handleClose, id}) {
         <Dialog
         open={open}
         onClose={handleClose}
-        //PaperComponent={PaperComponent}
+        // style={{background: 'transparent'}}
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
