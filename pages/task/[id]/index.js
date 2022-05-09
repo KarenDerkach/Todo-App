@@ -1,6 +1,6 @@
 import React from 'react'
 import Error from 'next/error'
-import TaskForm from '../../components/TaskForm'
+import TaskForm from '../../../components/TaskForm'
 
 export default function TaskDetail({ data, error }) {
   if (error && error.statusCode) return <Error statusCode={error.statusCode} title={error.statusText}/>

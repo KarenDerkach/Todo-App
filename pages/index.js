@@ -7,11 +7,6 @@ export default function Landing() {
     <>
       <h1>Welcome to Task Manager</h1>
       <div>
-        <Link href="/singIn">
-          <a>
-            <Button>Login</Button>
-          </a>
-        </Link>
         <Link href="/singUp">
           <a>
             <Button>Register</Button>
