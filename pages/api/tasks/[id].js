@@ -9,7 +9,13 @@ export default async (req, res) => {
     body,
     query: { id },
     method,
+   // cookies,
   } = req;
+
+  //const jwt = cookies.OurToken;
+
+  
+ 
   switch (method) {
     case "GET":
       try {
@@ -41,4 +47,5 @@ export default async (req, res) => {
     default:
         res.status(400).json({ message: "Method not allowed" });
   }
+
 };

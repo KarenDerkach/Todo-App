@@ -1,17 +1,17 @@
 import TaskList from "../../components/TaskList";
-import Link from 'next/link'
+import { useState } from "react";
 //import styles from '../styles/main.module.css'
 
 export default function Home({ tasks }) {
   //console.log(tasks)
+
+  
   return (
     <>
     <div>
       <TaskList data={tasks} />
     </div>
-    <div>
-     <Link href='/task/create'><a> <button>New Task</button></a></Link>
-    </div>
+   
     </>
   );
 }

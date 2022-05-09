@@ -1,16 +1,18 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from "next/link";
+import React from "react";
+import Button from "@mui/material/Button";
 
 export default function Landing() {
   return (
     <>
-
-       <h1 >
-          Welcome to Task Manager
-      </h1>
+      <h1>Welcome to Task Manager</h1>
       <div>
-        <Link href="/task/home"><a><button>HOME</button></a></Link>
+        <Link href="/singUp">
+          <a>
+            <Button>Register</Button>
+          </a>
+        </Link>
       </div>
-      </>
-  )
+    </>
+  );
 }

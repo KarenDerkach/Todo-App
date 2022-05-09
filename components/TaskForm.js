@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
+import { Button, Typography, TextField, MenuItem, Box} from "@mui/material";
 
-export default function TaskForm({task}) {
 
-    const {query, push} = useRouter()
-  
+export default function TaskForm({ task }) {
+  const { query, push } = useRouter();
 
-    const [input, setInput] = useState({
+  const [input, setInput] = useState({
     title: "",
     description: "",
     color: "",
@@ -18,7 +18,7 @@ export default function TaskForm({task}) {
     description: "",
   });
 
-  const colors = ["🔴", "🟡", "🟢", "🔵"];
+  const colors = ["red🔴", "yellow🟡", "green🟢", "blue🔵"];
 
   const handleChangeInput = (e) => {
     setInput({
@@ -42,35 +42,32 @@ export default function TaskForm({task}) {
   };
 
   const newTask = async () => {
-    try{
+    try {
       await fetch("http://localhost:3000/api/tasks/list", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(input),
-        })
-      }
-      catch(err){
-        console.log(err)
-      }
+      });
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-    const editTask  = async () => {
-      try{
-        await fetch(`http://localhost:3000/api/tasks/${query.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          }
-          ,body: JSON.stringify(input),
-        })
-      
-      }catch(err){
-        console.log(err)
-      }
+  const editTask = async () => {
+    try {
+      await fetch(`http://localhost:3000/api/tasks/${query.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
+    } catch (err) {
+      console.log(err);
     }
-  
+  };
 
   const validate = () => {
     const errors = {};
@@ -81,20 +78,20 @@ export default function TaskForm({task}) {
       errors.description = "Description is required";
     }
     return errors;
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
     if (Object.keys(errors).length > 0) {
-       return setError(errors);
+      return setError(errors);
     }
 
-    if(query.id){
-      await editTask()
-    }else{
-      await newTask()
+    if (query.id) {
+      await editTask();
+    } else {
+      await newTask();
     }
 
     setInput({
@@ -104,70 +101,122 @@ export default function TaskForm({task}) {
       status: "Pending",
     });
 
-    push('/task/home')
-
+    push("/task/home");
   };
 
-  useEffect(()=>{
-    if(query.id){
+  useEffect(() => {
+    if (query.id) {
       setInput({
         title: task.title,
         description: task.description,
         color: task.color,
         status: task.status,
-      })
+      });
     }
-  },[])
+  }, []);
 
   return (
-    <div>
-      <h1>{query.id ? "Edit Task" : "Create Task"}</h1>
+    <>
+      <Box
+        sx={{
+          marginTop: 0,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h3" component="div" gutterBottom>
+          {query.id ? "Edit Task" : "Create Task"}
+        </Typography>
 
-      <form onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input
-          type="text"
-          name="title"
-          value={input.title}
-          placeholder="Title"
-          onChange={handleChangeInput}
-          error={errors.title ?   errors.title : null}
-        />
-        <label>Description</label>
-        <textarea
-          name="description"
-          value={input.description}
-          placeholder="Description"
-          rows="2"
-          onChange={handleChangeInput}
-          error={errors.description ?   errors.description : null}
-        />
-        <label>Color</label>
-        <select
-          type="text"
-          name="color"
-          placeholder="Color"
-          onClick={handleSelectColor}
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1, display: "flex", flexDirection: "column" }}
         >
-          {colors.map((color, index) => (
-            <option key={index} value={color}>
-              {color}
-            </option>
-          ))}
-        </select>
-        <label>Status</label>
-        <select
-          type="text"
-          name="status"
-          placeholder="Status"
-          onClick={handleSelectStatus}
-        >
-          <option value="Pending">Pending</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Done">Done</option>
-        </select>
-        <button type="submit">{query.id ? "Update":"Add"}</button>
-      </form>
-    </div>
+          {!errors.title ? (
+            <TextField
+              margin="normal"
+              id="outlined-basic"
+              label="Title"
+              variant="outlined"
+              name="title"
+              value={input.title}
+              rows="2"
+              onChange={handleChangeInput}
+            />
+          ) : (
+            <TextField
+              margin="normal"
+              error
+              id="standard-error-helper-text"
+              label="Error"
+              defaultValue="Title"
+              name="title"
+              helperText={errors.title}
+              variant="standard"
+              onChange={handleChangeInput}
+            />
+          )}
+
+          {!errors.description ? (
+            <TextField
+              margin="normal"
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+              name="description"
+              value={input.description}
+              rows="2"
+              onChange={handleChangeInput}
+            />
+          ) : (
+            <TextField
+              margin="normal"
+              error
+              id="standard-error-helper-text"
+              label="Error"
+              name="description"
+              defaultValue="Description"
+              helperText={errors.description}
+              variant="standard"
+              onChange={handleChangeInput}
+            />
+          )}
+    
+         <TextField
+            margin="normal"
+            id="outlined-select-currency"
+            select
+            label="Color"
+            onChange={handleSelectColor}
+            helperText="Please select your color"
+            value={input.color}
+          >
+            {colors.map((color, index) => (
+              <MenuItem key={index} value={color}>
+                {color}
+              </MenuItem>
+            ))}
+          </TextField>
+          
+          <TextField
+            margin="normal"
+            id="outlined-select-currency"
+            select
+            label="Status"
+            onChange={handleSelectStatus}
+            helperText="Please select your status"
+            value={input.status}
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="In Progress">In Progress</MenuItem>
+            <MenuItem value="Done">Done</MenuItem>
+          </TextField>
+          <Button type="submit" variant="contained">{query.id ? "Update" : "Add"}</Button>
+        </Box>
+      </Box>
+    </>
   );
 }
