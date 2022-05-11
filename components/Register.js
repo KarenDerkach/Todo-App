@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Avatar, Button, CssBaseline, TextField, Link, Grid, Box,  Typography, Container,createTheme,ThemeProvider} from '@mui/material';
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {Button, CssBaseline, TextField, Link, Grid, Box,  Typography, Container,createTheme,ThemeProvider, Stack, Alert} from '@mui/material';
+
 import {useRouter} from 'next/router'
 
 
@@ -9,7 +9,9 @@ const theme = createTheme();
 export default function Register() {
 const router = useRouter();
 
-const [user, setUser] = useState({
+const [error, setError] = useState('');
+
+const [newUser, setNewUser] = useState({
   firstname: '',
   lastname: '',
   email: '',
@@ -17,8 +19,8 @@ const [user, setUser] = useState({
 })
 
 const handleChange = (event) => {
-  setUser({
-    ...user,
+  setNewUser({
+    ...newUser,
     [event.target.name]: event.target.value
   })
 }
@@ -27,14 +29,21 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try{ 
  
-   await fetch('http://localhost:3000/api/auth/singUp',{
+   const user = await fetch('http://localhost:3000/api/auth/singUp',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(newUser)
   })
- router.push('/singIn')
+  if(user.status === 201){
+    router.push('/singIn')
+  }
+  else{
+    console.log(user)
+    setError('Invalid email or password')
+  }
+ 
 }catch(err){
   window.alert(err)
 }
@@ -54,9 +63,9 @@ return (
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
-        </Avatar>
+        </Avatar> */}
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
@@ -66,10 +75,10 @@ return (
               <TextField
                 autoComplete="given-name"
                 name="firstname"
-                value={user.firstname}
+                value={newUser.firstname}
                 required
                 fullWidth
-                id="firstName"
+                id="firstname"
                 label="First Name"
                 autoFocus
                 onChange={handleChange}
@@ -79,10 +88,10 @@ return (
               <TextField
                 required
                 fullWidth
-                id="lastName"
+                id="lastname"
                 label="Last Name"
                 name="lastname"
-                value={user.lastname}
+                value={newUser.lastname}
                 autoComplete="family-name"
                 onChange={handleChange}
               />
@@ -94,7 +103,7 @@ return (
                 id="email"
                 label="Email Address"
                 name="email"
-                value={user.email}
+                value={newUser.email}
                 autoComplete="email"
                 onChange={handleChange}
               />
@@ -104,7 +113,7 @@ return (
                 required
                 fullWidth
                 name="password"
-                value={user.password}
+                value={newUser.password}
                 label="Password"
                 type="password"
                 id="password"
@@ -121,9 +130,12 @@ return (
           >
             Sign Up
           </Button>
+          {error &&<Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error"> {error}</Alert>
+            </Stack>}
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/singIn" variant="body2">
+              <Link href="/auth/singIn" variant="body2">
                 <a>Already have an account? Sign in</a>
               </Link>
             </Grid>

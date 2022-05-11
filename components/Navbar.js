@@ -1,4 +1,5 @@
 import React , {useState}from 'react'
+import {useRouter} from 'next/router';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 export default function Navbar() {
+
+  const router = useRouter();
 
   const [isLogin, setIsLogin] = useState(false);
 
@@ -15,7 +18,11 @@ export default function Navbar() {
     })
     setIsLogin(false);
   }
-
+  
+  const handleLogin = () => {
+    setIsLogin(true);
+    router.push('/auth/singIn');
+  }
   return (
     <>
       <AppBar
@@ -26,15 +33,14 @@ export default function Navbar() {
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            <Link href='/task/home'><a>Todo App</a></Link>
+            Todo App
           </Typography>
           {
             !isLogin ? 
-          <Link href="/singIn">
-          <a>
-            <Button variant="outlined">Login</Button>
-          </a>
-        </Link>
+         
+            <Button onClick={handleLogin}variant="outlined">Login</Button>
+         
+  
         :
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={handleLogout}>
             Logout

@@ -49,15 +49,15 @@ try{
           });
           res.setHeader('Set-Cookie', serialized);
 
-
+          
 
           console.log("usuario creado", userFound)
 
-          res.json({
+          return res.status(201).json({
             ok: true,
             id: userFound._id,
             firstname: userFound.firstname,
-            token,
+            token
           });
 
        
