@@ -14,12 +14,14 @@ try{
     let userFound = await UserModel.findOne({ email });
 
     if (userFound) {
+      console.log("ENTRE AQUI")
       return res.status(401).json({ 
         err: true,
         message: "This email is already in use"})
       
     }
     if(!email, !password, !firstname, !lastname){
+      console.log("ENTRE AQUI 2")
      return  res.status(401).json({
         err: true,
         message: "All fields are required"
@@ -27,6 +29,7 @@ try{
       })
     }
     if(password.length < 6){
+      console.log("ENTRE AQUI 3")
       return res.status(401).json({
         err: true,
         message: "Password must be at least 6 characters"
@@ -34,7 +37,7 @@ try{
     }
     //fin verificaciones
     
-    const userNew = new UserModel({
+    const userNew = await new UserModel({
       firstname,
       lastname,
       email,
@@ -58,7 +61,7 @@ try{
     // res.setHeader('Set-Cookie', serialized);
 
 
-    res.status(201).json({
+    return res.status(201).json({
       ok: true,
       user: savedUser,
        // token,

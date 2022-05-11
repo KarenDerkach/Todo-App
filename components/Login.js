@@ -1,5 +1,5 @@
 import {useState} from "react";
-import Avatar from "@mui/material/Avatar";
+//import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+//import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -37,14 +37,14 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-      const user =await fetch('http://localhost:3000/api/auth/singIn', {
+      const dataUser =await fetch('http://localhost:3000/api/auth/singIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         }
         , body: JSON.stringify(user)
       })
-      if(user.status === 200){
+      if(dataUser.status === 201){
         router.push('/task/home')
       }else{
         setError('Invalid email or password')
@@ -70,9 +70,9 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -119,7 +119,7 @@ export default function Login() {
             </Stack>}
             <Grid container>
               <Grid item>
-                <Link href="/singUp" variant="body2">
+                <Link href="/auth/singUp" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
