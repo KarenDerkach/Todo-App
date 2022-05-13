@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { Button, Typography, TextField, MenuItem, Box} from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 export default function TaskForm({ task }) {
@@ -217,6 +219,13 @@ export default function TaskForm({ task }) {
           <Button type="submit" variant="contained">{query.id ? "Update" : "Add"}</Button>
         </Box>
       </Box>
+      <Link href='/task/home'><Box sx={{
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          }}>
+     <Button variant="outlined" startIcon={<ArrowBackIcon />}>Back</Button>
+      </Box></Link>
     </>
   );
 }
