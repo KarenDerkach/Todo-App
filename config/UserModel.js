@@ -21,6 +21,10 @@ const UserSchema = Schema({
         type: String,
         required: true
     },
+    isLogged: {
+        type: Boolean,
+        default: false
+    },
     tasks: [{
         type: Schema.Types.ObjectId,
         ref: 'tasks',

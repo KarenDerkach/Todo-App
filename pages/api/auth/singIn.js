@@ -9,15 +9,16 @@ import { serialize} from 'cookie'
  
 export default async (req, res) => {
 
-
-    const { email, password } = req.body;
+    const { method, body} = req
+    const { email, password } = body;
 
    
 
     
-try{ 
-    if(req.method === 'POST'){
-        
+
+    switch (method) {
+        case "POST":
+   try {
         const userFound = await UserModel.findOne({ email });
         if (!userFound) {
           return res.status(401).json({
@@ -49,28 +50,36 @@ try{
           });
           res.setHeader('Set-Cookie', serialized);
 
+
+          const userUpdated = await UserModel.findByIdAndUpdate({ _id: userFound._id.toString() }, {  isLogged: true });
           
 
-          console.log("usuario creado", userFound)
+          console.log("usuario creado", userUpdated )
 
           return res.status(201).json({
             ok: true,
-            id: userFound._id,
-            firstname: userFound.firstname,
+            id: userUpdated._id,
+            firstname: userUpdated.firstname,
             token
           });
-
-       
-      }else{
-        res.status(400).json({
-            err: true,
-            message: "Method not allowed"
-        })
-      }
     }
     catch(error){
       console.log(error)
     }
-};
+        break;
+    // case "GET":
+    //   try{
+    //     const allUser = await UserModel.find({validate: true});
+    //     if (!allUser) return res.status(404).json({ message: "Users not found" });
+    //     return res.status(200).json(task);
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+        // break;
+    default:
+      res.status(400).json({ message: "Method not allowed" });
+
+  }
+}
    
   

@@ -93,7 +93,7 @@ export default function TaskList({ data }) {
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableBody>
               {(rowsPerPage > 0
-                ? data.slice(
+                ? data?.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )

@@ -1,17 +1,16 @@
 import  UserModel from "../../../config/UserModel"; 
 import dbConnect  from '../../../config/dbconnection'
-//import generateToken from '../../../config/generateToken'
-//import { serialize} from 'cookie'
  dbConnect()
 
 
 
 export default async (req, res ) => {
   const { email, password, firstname, lastname } = req.body;
-try{
-  //verificaciones
-    if(req.method === 'POST'){
-    let userFound = await UserModel.findOne({ email });
+
+  switch (req.method) {
+    case "POST":
+      try {
+        let userFound = await UserModel.findOne({ email });
 
     if (userFound) {
       console.log("ENTRE AQUI")
@@ -45,86 +44,27 @@ try{
     });
     
     const savedUser = await userNew.save();
-    
-
-    // Generar JWT
-     //const token = await generateToken(savedUser._id);
-
-     // Enviar el token al cliente
-    //  const serialized = serialize('OurToken', token, {
-    //   maxAge: '1h',
-    //   httpOnly: true,
-    //   sameSite: 'strict',
-    //   path: '/',
-    //   secure: process.env.NODE_ENV === 'production',
-    // });
-    // res.setHeader('Set-Cookie', serialized);
-
 
     return res.status(201).json({
       ok: true,
       user: savedUser,
-       // token,
     });
-}else{
-    res.status(400).json({
-        err: true,
-        message: "Method not allowed"
-    })
+
+      }catch(err){
+        console.log(err)
+      }
+      break;
+    case "GET":
+      try{
+        const allUser = await UserModel.find({isLogged: true});
+        // console.log("usuarios encontrados", allUser)
+        if (!allUser) return res.status(404).json({ message: "Users not found" });
+        return res.status(200).json(allUser);
+      }catch(err){
+        console.log(err)
+      }
+        break;
+    default:
+      res.status(400).json({ message: "Method not allowed" });
+  }
 }
-
-}
-catch(err){
-  res.status(500).json({
-    err: true,
-    message: "Error en el servidor",
-    error: err
-  })
-}
-
-}
-
-
-
-
-
-
-
-
-
-
-// import  UserModel from "../../config/UserModel"; 
-// import dbConnect  from '../../config/dbconnection'
-// dbConnect()
-// //userCreate
-
-//  export default async (req, res) => {
-//   try {
-//     const { firstname, lastname, email, password } = req.body;
-
-//     if(req.method === 'POST'){
-//         const  user = await new UserModel({
-//             firstname,
-//             lastname,
-//             email,
-//             password
-//         })
-//         // encrypting password
-//         user.password = await UserModel.encryptPassword(user.password);
-//         // saving the new user
-//         const savedUser = await user.save();
-//         return res.status(200).json({
-//           _id: savedUser._id,
-//           firstname: savedUser.firstname,
-//           lastname: savedUser.lastname,
-//           email: savedUser.email,
-//         });
-//     }else{
-//         return res.status(400).json({
-//             message: 'Method not allowed'
-//         })
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
