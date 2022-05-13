@@ -7,8 +7,8 @@ dbConnect()
 export default   async (req, res)=>{
     const {method, body, cookies} = req
 
-    // const jwt = cookies.OurToken
-
+    // const jwt = cookies.OurToken;
+    // console.log("tokenn", jwt)
     // if(!jwt){
     //     return res.status(401).json({
     //         err: true,
@@ -21,7 +21,7 @@ export default   async (req, res)=>{
 
                 const allTasks = await TasksModel.find()
                 res.status(200).json(allTasks)
-                console.log(allTasks)
+                //console.log(allTasks)
             }catch(err){
                 res.status(500).json({message: err.message})
             }
@@ -38,7 +38,6 @@ export default   async (req, res)=>{
         default:
             res.status(400).json({message: 'Method not allowed'})
     }
-
+    }
     
     
-}

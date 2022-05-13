@@ -1,10 +1,10 @@
 import TaskList from "../../components/TaskList";
-import { useState } from "react";
+import Error from 'next/error'
 //import styles from '../styles/main.module.css'
 
-export default function Home({ tasks }) {
+export default function Home({ tasks, error }) {
   //console.log(tasks)
-
+  if (error && error.statusCode) return <Error statusCode={error.statusCode} title={error.statusText}/>
   
   return (
     <>
@@ -19,12 +19,26 @@ export default function Home({ tasks }) {
 //reemplaza UseEffect, comunica info del back al front
 export const getServerSideProps = async (context) => {
   const res = await fetch("http://localhost:3000/api/tasks/list");
-  const data = await res.json();
-  //console.log(data)
-  return {
-    props: {
-      tasks: data,
-    },
-  };
+
+  if(res.status === 200){
+    const data = await res.json();
+    return {
+      props: {
+        tasks: data,
+      },
+    };
+  }
+  else{
+    return{
+      props: {
+        error: {
+          statusCode: res.status,
+          statusText: 'You are not logged in'
+        }
+      }
+    }
+
+  }
+  
 };
 

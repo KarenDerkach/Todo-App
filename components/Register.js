@@ -37,7 +37,7 @@ const handleSubmit = async (e) => {
     body: JSON.stringify(newUser)
   })
   if(user.status === 201){
-    router.push('/singIn')
+    router.push('/auth/singIn')
   }
   else{
     console.log(user)

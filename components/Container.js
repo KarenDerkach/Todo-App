@@ -14,7 +14,7 @@ export default function Container (props) {
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet"></link>
 <link   rel="stylesheet"   href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
       </Head>
-      <Navbar/>
+      <Navbar props={props}/>
     
     <main className={styles.container}>{props.children}</main>
   </div>

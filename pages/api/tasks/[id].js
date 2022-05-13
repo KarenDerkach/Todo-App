@@ -9,13 +9,18 @@ export default async (req, res) => {
     body,
     query: { id },
     method,
-   // cookies,
+    cookies,
   } = req;
 
-  //const jwt = cookies.OurToken;
+//   const jwt = cookies.OurToken;
+//  console.log("tokenn", jwt)
+// if(!jwt){
+//   return res.status(401).json({
+//     err: true,
+//     message: "You are not logged in"
+//   })
+// }else{
 
-  
- 
   switch (method) {
     case "GET":
       try {
@@ -47,5 +52,4 @@ export default async (req, res) => {
     default:
         res.status(400).json({ message: "Method not allowed" });
   }
-
 };

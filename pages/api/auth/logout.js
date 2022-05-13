@@ -1,9 +1,12 @@
+import UserModel from "../../../config/UserModel";
 import { serialize } from "cookie";
 
 export default async (req, res) => {
     const {  cookies } = req;
 
     const jwt = cookies.OurToken;
+
+    //console.log("tokenn", jwt);
 
     if (!jwt) {
         return res.status(401).json({
@@ -19,9 +22,11 @@ export default async (req, res) => {
             //secure: process.env.NODE_ENV === 'production',
           });
             res.setHeader('Set-Cookie', serialized);
+            const userUpdated = await UserModel.updateOne({  isLogged: false });
             res.status(200).json({
                 ok: true,
                 message: "You are logged out",
+                user: userUpdated
             })
     }
 }
