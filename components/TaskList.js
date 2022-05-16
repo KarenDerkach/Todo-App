@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {server} from '../config'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import swal from "sweetalert";
@@ -48,7 +49,7 @@ export default function TaskList({ data }) {
         buttons: [true, "Delete"],
       }).then(async (willDelete) => {
         if (willDelete) {
-          await fetch(`${process.env.NEXT_URL}/api/tasks/${id}`, {
+          await fetch(`${server}/api/tasks/${id}`, {
             method: "DELETE",
           });
           push("/task/home");
