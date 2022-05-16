@@ -48,7 +48,7 @@ export default function TaskList({ data }) {
         buttons: [true, "Delete"],
       }).then(async (willDelete) => {
         if (willDelete) {
-          await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tasks/${id}`, {
+          await fetch(`${process.env.NEXT_URL}/api/tasks/${id}`, {
             method: "DELETE",
           });
           push("/task/home");
