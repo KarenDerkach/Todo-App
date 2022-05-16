@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import {server} from '../config'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Button, Typography, TextField, MenuItem, Box } from "@mui/material";
@@ -44,7 +45,7 @@ export default function TaskForm({ task }) {
 
   const newTask = async () => {
     try {
-      await fetch(`${process.env.NEXT_URL}/api/tasks/list`, {
+      await fetch(`${server}/api/tasks/list`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +59,7 @@ export default function TaskForm({ task }) {
 
   const editTask = async () => {
     try {
-      await fetch(`${process.env.NEXT_URL}/api/tasks/${query.id}`, {
+      await fetch(`${server}/api/tasks/${query.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

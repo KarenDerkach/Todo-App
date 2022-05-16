@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {server} from '../config'
 import {
   Button,
   CssBaseline,
@@ -40,7 +41,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await fetch(`${process.env.NEXT_URL}/api/auth/singUp`, {
+      const user = await fetch(`${server}/api/auth/singUp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import React from 'react'
+import {server} from '../../../config'
 import Error from 'next/error'
 import TaskForm from '../../../components/TaskForm'
 
@@ -14,7 +15,7 @@ export default function TaskDetail({ data, error }) {
 
 export async function getServerSideProps({ query: { id } }) {
   //console.log(query)
-  const res = await fetch(`${process.env.NEXT_URL}/api/tasks/${id}`);
+  const res = await fetch(`${server}/api/tasks/${id}`);
   
   //if task exist
   if(res.status === 200){

@@ -1,3 +1,4 @@
+import {server} from '../config'
 import { useState } from "react";
 import {
   Button,
@@ -37,7 +38,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const dataUser = await fetch(`${process.env.NEXT_URL}/api/auth/singIn`, {
+    const dataUser = await fetch(`${server}/api/auth/singIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
