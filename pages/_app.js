@@ -4,17 +4,16 @@ import Container from "../components/Container";
 import "../styles/globals.css";
 
 export default function MyApp({ Component, pageProps }) {
-
   const router = useRouter();
 
   const [user, setUser] = useState([]);
 
   //console.log("usuarios de ruta singUp", user)
 
-  const [isLogin, setIsLogin] = useState( false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleLogout = async () => {
-    await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth/logout`, {
+    await fetch(`${process.env.NEXT_URL}/api/auth/logout`, {
       method: "GET",
     });
     setIsLogin(false);
@@ -27,19 +26,21 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const fetchGetUser = async () => {
-      const res = await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth/singUp`);
+      const res = await fetch(`${process.env.NEXT_URL}/api/auth/singUp`);
       const data = await res.json();
       setUser(data);
-    }
+    };
     fetchGetUser();
-  },[user]);
+  }, [user]);
 
-
- 
   return (
-    
-    <Container user={user} isLogin={isLogin} logout={handleLogout} login={handleLogin}>
-      <Component {...pageProps}/>
+    <Container
+      user={user}
+      isLogin={isLogin}
+      logout={handleLogout}
+      login={handleLogin}
+    >
+      <Component {...pageProps} />
     </Container>
   );
 }

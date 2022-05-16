@@ -1,10 +1,8 @@
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 
+export default function Navbar({ props }) {
+  const { user, logout, login } = props;
 
-export default function Navbar({props}) {
-  const { user, isLogin, logout, login } = props;
-
- 
   return (
     <>
       <AppBar
@@ -18,7 +16,7 @@ export default function Navbar({props}) {
             Todo App
           </Typography>
           {user?.length < 1 ? (
-            <Button  onClick={login}variant="outlined">
+            <Button onClick={login} variant="outlined">
               Login
             </Button>
           ) : (
