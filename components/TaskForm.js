@@ -44,7 +44,7 @@ export default function TaskForm({ task }) {
 
   const newTask = async () => {
     try {
-      await fetch("http://localhost:3000/api/tasks/list", {
+      await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tasks/list`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function TaskForm({ task }) {
 
   const editTask = async () => {
     try {
-      await fetch(`http://localhost:3000/api/tasks/${query.id}`, {
+      await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tasks/${query.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

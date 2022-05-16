@@ -29,7 +29,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try{ 
  
-   const user = await fetch('http://localhost:3000/api/auth/singUp',{
+   const user = await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth/singUp`,{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
