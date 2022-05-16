@@ -14,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
   const [isLogin, setIsLogin] = useState( false);
 
   const handleLogout = async () => {
-    await fetch("http://localhost:3000/api/auth/logout", {
+    await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth/logout`, {
       method: "GET",
     });
     setIsLogin(false);
@@ -27,7 +27,7 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const fetchGetUser = async () => {
-      const res = await fetch("http://localhost:3000/api/auth/singUp");
+      const res = await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth/singUp`);
       const data = await res.json();
       setUser(data);
     }

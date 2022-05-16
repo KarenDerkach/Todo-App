@@ -37,7 +37,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-      const dataUser =await fetch('http://localhost:3000/api/auth/singIn', {
+      const dataUser =await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/auth/singIn`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

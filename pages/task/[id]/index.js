@@ -14,7 +14,7 @@ export default function TaskDetail({ data, error }) {
 
 export async function getServerSideProps({ query: { id } }) {
   //console.log(query)
-  const res = await fetch(`http://localhost:3000/api/tasks/${id}`);
+  const res = await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tasks/${id}`);
   
   //if task exist
   if(res.status === 200){

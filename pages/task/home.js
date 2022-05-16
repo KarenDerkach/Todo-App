@@ -18,7 +18,7 @@ export default function Home({ tasks, error }) {
 
 //reemplaza UseEffect, comunica info del back al front
 export const getServerSideProps = async (context) => {
-  const res = await fetch("http://localhost:3000/api/tasks/list");
+  const res = await fetch(`${process.env.PROTOCOL}${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tasks/list`);
 
   if(res.status === 200){
     const data = await res.json();
