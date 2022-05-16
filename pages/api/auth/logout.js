@@ -21,7 +21,7 @@ export default async (req, res) => {
             path: '/',
           });
             res.setHeader('Set-Cookie', serialized);
-            const userUpdated = await UserModel.updateOne({  isLogged: false });
+            const userUpdated = await UserModel.updateMany({  isLogged: false });
             res.status(200).json({
                 ok: true,
                 message: "You are logged out",
