@@ -46,7 +46,6 @@ export default async (req, res) => {
             httpOnly: true,
             sameSite: 'strict',
             path: '/',
-            //secure: process.env.NODE_ENV === 'production',
           });
           res.setHeader('Set-Cookie', serialized);
 
@@ -54,7 +53,7 @@ export default async (req, res) => {
           const userUpdated = await UserModel.findByIdAndUpdate({ _id: userFound._id.toString() }, {  isLogged: true });
           
 
-          console.log("usuario creado", userUpdated )
+          //console.log("usuario creado", userUpdated )
 
           return res.status(201).json({
             ok: true,
@@ -67,15 +66,6 @@ export default async (req, res) => {
       console.log(error)
     }
         break;
-    // case "GET":
-    //   try{
-    //     const allUser = await UserModel.find({validate: true});
-    //     if (!allUser) return res.status(404).json({ message: "Users not found" });
-    //     return res.status(200).json(task);
-    //   }catch(err){
-    //     console.log(err)
-    //   }
-        // break;
     default:
       res.status(400).json({ message: "Method not allowed" });
 

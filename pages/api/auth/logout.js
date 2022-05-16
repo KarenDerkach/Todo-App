@@ -19,7 +19,6 @@ export default async (req, res) => {
             httpOnly: true,
             sameSite: 'strict',
             path: '/',
-            //secure: process.env.NODE_ENV === 'production',
           });
             res.setHeader('Set-Cookie', serialized);
             const userUpdated = await UserModel.updateOne({  isLogged: false });

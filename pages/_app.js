@@ -43,17 +43,3 @@ export default function MyApp({ Component, pageProps }) {
     </Container>
   );
 }
-
-
-// export const getServerSideProps = async (context) => {
-//   const res = await fetch("http://localhost:3000/api/auth/singUp");
-//   const data = await res.json();
-
-//   console.log("dataaaaaa: ",data)
-
-//   return {
-//     props: {
-//       user: data,
-//     },
-//   };
-// };
