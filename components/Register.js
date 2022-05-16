@@ -128,6 +128,7 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  helperText="Your password must be at least 6 characters long"
                   onChange={handleChange}
                 />
               </Grid>
