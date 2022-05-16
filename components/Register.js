@@ -136,7 +136,7 @@ return (
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/auth/singIn" variant="body2">
-                <a>Already have an account? Sign in</a>
+                Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
